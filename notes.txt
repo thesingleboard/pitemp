@@ -1,0 +1,13 @@
+Notes for setting up the broker on Rasbian as a daemon useing SSl
+
+1. Start the broker as a daemon
+# sudo mosquitto -d -v -c /etc/mosquitto/mosquitto.conf
+
+2. create the ssl keys a certs.
+# openssl req -nodes -newkey rsa:2048 -keyout mqtt_key.key -out mqtt_csr.csr -subj "/C=US/ST=Home/L=HOME/O=Global Security/OU=MQTT Department/CN=nothing.com"
+# openssl x509 -req -days 365 -in ./mqtt_csr.csr -signkey ./mqtt_key.key -out mqtt_cert.crt
+
+3. add the serts to the broker ca cert directory /etc/mosquitto/ca_certificates
+
+4. reStart the broker with the command 
+# sudo mosquitto -d -v -c /etc/mosquitto/mosquitto.conf

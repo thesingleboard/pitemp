@@ -1,0 +1,12 @@
+rpi.gpio==0.7.0
+pyopenssl==16.2.0
+jinja2==2.8
+adafruit-blinka==4.2.0
+adafruit-circuitpython-dht==3.4.0
+schedule==0.6.0
+adafruit-ssd1306==1.6.2
+adafruit-dht==1.4.0
+adafruit-platformdetect==2.5.0
+adafruit-pureio==1.0.4
+flask==0.12.1
+paho-mqtt==1.5.0
