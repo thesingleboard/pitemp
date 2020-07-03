@@ -1,5 +1,5 @@
 rpi.gpio==0.7.0
-pyopenssl==16.2.0
+pyopenssl==17.5.0
 jinja2==2.8
 adafruit-blinka==4.2.0
 adafruit-circuitpython-dht==3.4.0
