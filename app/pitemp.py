@@ -15,7 +15,7 @@ from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 
-def screen_output():
+def main():
     
     plib = pitemp()
     
@@ -111,4 +111,4 @@ def screen_output():
 
 if __name__=='__main__':
     #Run the function
-    schedule.every(settings.INTERVAL).seconds.do(screen_output())
+    schedule.every(settings.INTERVAL).seconds.do(main())
