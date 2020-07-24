@@ -1,4 +1,9 @@
 #!/bin/bash
+#make sure you have the certificate before setting up.
+
+CERT='ca.crt'
+CERTPATH='~/pitemp/certs'
+
 sudo apt-get -y update
 sudo apt-get upgrade
 
@@ -22,4 +27,8 @@ sudo pip3 install pysqlite3
 sudo apt install -y python-smbus
 sudo apt-get install -y libgpiod2
 sudo apt install -y i2c-tools
+
+#copy the ca.crt file to the correct location
+sudo mkdir -p ${CERTPATH}
+sudo cp ${CERT} ${CERTPATH}
 

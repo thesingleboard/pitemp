@@ -9,5 +9,5 @@ export MQTTBROKER='192.168.1.61'
 #export MQTTPORT='1883'
 #port 8883 is the tls/ssl port. 1883 is no secure
 export MQTTPORT='8883'
-export SSLCERTPATH='/home/pi/Documents/singleboard/pitemp/tools'
+export SSLCERTPATH='/home/pi/Documents/pitemp/certs'
 export SSLCERT='ca.crt'

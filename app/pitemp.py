@@ -82,7 +82,8 @@ def main():
                 plib.send_mqtt({"sensor":"sensor"+pin,"temp":temperature,"humidity":humidity,"scale":temp_scale})
             except Exception as e:
                 logging.warn("Could not connect to the mqtt broker,writing to internal datastore")
-                plib.db_insert()
+            
+            plib.db_insert({"sensor":"sensor"+pin,"temp":temperature,"humidity":humidity,"scale":temp_scale})
 
             #TEST#
             #print(output)

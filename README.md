@@ -1,1 +1,2 @@
-This is a pi based temp sensor and alerting system. It has multiple temp and humidity sensors with an LCD output.
+#PITEMP
+A pi 3 based temperature, humidity and alerting system. It uses multiple dh11 sensors with an LCD output screen.
