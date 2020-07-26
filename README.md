@@ -26,14 +26,33 @@ All of the codeing for PiTemp is done using Python3. The reason I chose Python t
 * [Sqlite3] - A simple database used to store metrics.
 * [Schedule] - The Python time scheduling library.
 * [PIL] - Python imaging library.
+* [RpiGPIO] - Python class to control Rpi GPIO interface.
+* [jinja2] - Expressive template libraryBlinka.
+* [Blinka] - Adafruit Blinka provides a programming interface for Rpi microcontroller.
 
-[Python3]:
-[AdafruitDHT]:
-[AdafruitSSD1306]:
-[PahoMqtt]:
-[Sqlite3]:
-[Schedule]:
-[PIL]:
+[Python3]: <https://www.python.org/>
+[AdafruitDHT]: <https://github.com/adafruit/Adafruit_Python_DHT>
+[AdafruitSSD1306]: <https://github.com/adafruit/Adafruit_SSD1306>
+[PahoMqtt]: <https://www.eclipse.org/paho/>
+[Sqlite3]: <https://docs.python.org/3/library/sqlite3.html>
+[Schedule]: <https://pypi.org/project/schedule/>
+[PIL]: <https://www.pythonware.com/products/pil/>
+[RpiGPIO]: <https://pypi.org/project/RPi.GPIO/>
+[jinja2]: <https://pypi.org/project/Jinja2/>
+[Blinka]: <https://pypi.org/project/Adafruit-Blinka/>
+
+## Python library version
+rpi.gpio = 0.7.0
+jinja2 = 2.10.1
+adafruit-blinka = 4.2.0
+adafruit-circuitpython-dht = 3.4.0
+schedule = 0.6.0
+adafruit-ssd1306 = 1.6.2
+adafruit-dht = 1.4.0
+adafruit-platformdetect = 2.5.0
+adafruit-pureio = 1.0.4
+flask = 1.0.0
+paho-mqtt = 1.5.0
 
 ## Architectural diagram
 
