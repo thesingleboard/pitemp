@@ -29,6 +29,8 @@ All of the codeing for PiTemp is done using Python3. The reason I chose Python t
 * [RpiGPIO] - Python class to control Rpi GPIO interface.
 * [jinja2] - Expressive template libraryBlinka.
 * [Blinka] - Adafruit Blinka provides a programming interface for Rpi microcontroller.
+* [PlatformDetect] - Adafruit best guess platform detection library
+* [Pureio] - Pure Python access to SPI and I2C
 
 [Python3]: <https://www.python.org/>
 [AdafruitDHT]: <https://github.com/adafruit/Adafruit_Python_DHT>
@@ -40,19 +42,21 @@ All of the codeing for PiTemp is done using Python3. The reason I chose Python t
 [RpiGPIO]: <https://pypi.org/project/RPi.GPIO/>
 [jinja2]: <https://pypi.org/project/Jinja2/>
 [Blinka]: <https://pypi.org/project/Adafruit-Blinka/>
+[PlatformDetect]: <https://pypi.org/project/Adafruit-PlatformDetect/>
+[Pureio]: <https://github.com/adafruit/Adafruit_Python_PureIO/tree/1.0.4>
 
 ## Python library version
-rpi.gpio = 0.7.0
-jinja2 = 2.10.1
-adafruit-blinka = 4.2.0
-adafruit-circuitpython-dht = 3.4.0
-schedule = 0.6.0
-adafruit-ssd1306 = 1.6.2
-adafruit-dht = 1.4.0
-adafruit-platformdetect = 2.5.0
-adafruit-pureio = 1.0.4
-flask = 1.0.0
-paho-mqtt = 1.5.0
+|  Library | Version  |
+| ------------ | ------------ |
+|  rpi.gpio |  0.7.0 |
+|  jinja2 | 2.10.1  |
+|  adafruit-blinka |  4.2.0 |
+|  schedule | 0.6.0  |
+| adafruit-ssd1306  | 1.6.2  |
+| adafruit-dht | 1.4.0 |
+| adafruit-platformdetect | 2.5.0 |
+| adafruit-pureio | 1.0.4 |
+| paho-mqtt | 1.5.0 |
 
 ## Architectural diagram
 
