@@ -4,7 +4,19 @@ A pi 3 based temperature, humidity and alerting system. Pitemp uses multiple DHT
 ---
 
 # Part 1 - Overview
-## Parts needed
+## Hardware components needed
+If you are a hobbiest you may have all of the parts needed to build out the PiTemp. 
+* [RaspberryPI3] - The brains of the operation!
+* [DHT11] - Sensors used to sample the temperature and humidity.
+* [SSD1306] - Small OLED display used to output data.
+* [BreadBoard] - Prototyping base used to build the piTemp for development.
+
+[RaspberryPI3]: <https://www.raspberrypi.org/products/raspberry-pi-3-model-b/>
+[DHT11]: <https://components101.com/dht11-temperature-sensor>
+[SSD1306]: <https://components101.com/oled-display-ssd1306>
+[BreadBoard]: <https://en.wikipedia.org/wiki/Breadboard>
+
+## Software Libraries needed
 
 ## Architectural diagram
 
@@ -12,7 +24,7 @@ A pi 3 based temperature, humidity and alerting system. Pitemp uses multiple DHT
 ---
 
 # Part 2 - Build the PiTemp
-## Programming components
+## Programming the hardware
 
 ## Build a simple broker
 
@@ -32,8 +44,12 @@ A pi 3 based temperature, humidity and alerting system. Pitemp uses multiple DHT
 ## DHT11 Sensor
 ---
 
-## Part 4 - Extra Credit
-### Set up thingsboard
+# Part 4 - Extra Credit
+## Set up thingsboard
+
+## Build a rest API
+
+## Simple Graphing Web Service
 
 You can also:
   - Import and save files from GitHub, Dropbox, Google Drive and One Drive
