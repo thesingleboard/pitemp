@@ -112,6 +112,10 @@ sudo cp ${CERT} ${CERTPATH}
 ## Programming the hardware
 
 ## Build a simple broker
+In order to develop and test the PiTemp and the MQTT protocol, you will need to deploy a simple broker to recive the data sent by the PiTemp. The MQTT protocol uses SSL to protect data, and as a best practice should be used in IoT communication channels. The MQTT protocol is used in IoT applications because of it speed and the fault tolerant nature of the protocol.
+
+MQTT - https://mqtt.org/
+
 ```
 #!/bin/bash
 
