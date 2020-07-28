@@ -19,6 +19,7 @@ If you are a hobbiest you may have all of the parts needed to build out the PiTe
 ## Software Libraries needed
 All of the codeing for PiTemp is done using Python3. The reason I chose Python to build PiTemp is because it is easy to understand and can be picked up easily. It isalso one of the mpost popular programming langauges around, and can be used to build everything from simple scripts to machine learning alrorythems.
 
+* [OS] - Raspberry Pi OS/Raspbian 9
 * [Python3] - The base language used in PiTemp.
 * [AdafruitDHT] - An open source DHT11 control library.
 * [AdafruitSSD1306] - An open source OLED control library.
@@ -44,6 +45,7 @@ All of the codeing for PiTemp is done using Python3. The reason I chose Python t
 [Blinka]: <https://pypi.org/project/Adafruit-Blinka/>
 [PlatformDetect]: <https://pypi.org/project/Adafruit-PlatformDetect/>
 [Pureio]: <https://github.com/adafruit/Adafruit_Python_PureIO/tree/1.0.4>
+[OS]: <https://www.raspberrypi.org/downloads/>
 
 ## Python library version
 |  Library | Version  |
@@ -109,8 +111,6 @@ sudo mkdir -p ${CERTPATH}
 sudo cp ${CERT} ${CERTPATH}
 ```
 
-## Programming the hardware
-
 ## Build a simple broker
 In order to develop and test the PiTemp and the MQTT protocol, you will need to deploy a simple broker to recive the data sent by the PiTemp. The MQTT protocol uses SSL to protect data, and as a best practice should be used in IoT communication channels. The MQTT protocol is used in IoT applications because of it speed and the fault tolerant nature of the protocol.
 
@@ -152,6 +152,7 @@ sudo cp ca.crt ./client_cert
 #Configure the broker
 sudo mv /etc/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.old
 
+#build a Mosquitto config file
 sudo cat /etc/mosquitto/mosquitto.conf <<EOF
 pid_file /var/run/mosquitto.pid
 
@@ -162,6 +163,7 @@ log_dest file /var/log/mosquitto/mosquitto.log
 
 include_dir /etc/mosquitto/conf.d
 
+#port 8883 is the MQTT secure port
 listener 8883
 cafile /etc/mosquitto/ca_certificates/ca.crt
 keyfile /etc/mosquitto/ca_certificates/server.key
@@ -169,6 +171,7 @@ certfile /etc/mosquitto/ca_certificates/server.crt
 
 EOF
 
+#Start Mosquitto broker
 sudo mosquitto -d -v -c /etc/mosquitto/mosquitto.conf
 ```
 ## Create new certificates
@@ -176,7 +179,6 @@ If you need to build a new set of certificates for SSL, use the following script
 
 ```
 #!/bin/bash -x
-#NOTE: This is on raspbian
 #generate the certificate authority key
 openssl genrsa -aes128 -out ca.key -passout pass:mynewpassword 3072
 
@@ -197,6 +199,22 @@ openssl x509 -passin pass:mynewpassword -req -in server.csr -CA ca.crt -CAkey ca
 ```
 
 ## Run PiTemp
+### Configure the PiTemp
+In order to configure the PiTemp to match your environment edit the settings.py file.
+```
+
+```
+
+
+### Start the PiTemp IoT device
+```
+# python3 pitemp.py
+```
+### Start the broker
+```
+# sudo mosquitto -d -v -c /etc/mosquitto/mosquitto.conf
+```
+
 ---
 
 # Part 3 - How it works 
