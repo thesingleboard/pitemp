@@ -65,27 +65,35 @@ All of the codeing for PiTemp is done using Python3. The reason I chose Python t
 
 # Part 2 - Build the PiTemp
 ## Set up the PiTemp
+The following bash sscript will install everything needed to develop and run the PiTemp code.
+
 ```bash
 #!/bin/bash
 #make sure you have the certificate before setting up.
 
+#The certificate needed to connect to the broker.
+#In this project we will generate the certificates on our example broker.
 CERT='ca.crt'
 CERTPATH='~/pitemp/certs'
 
+#Update the underlying libraries.
 sudo apt-get -y update
 sudo apt-get upgrade
 
+#Install all of the Python 3 components
 sudo apt-get install -y python3-pip
 sudo apt install -y python3-dev
 sudo apt install -y python-imaging python-smbus i2c-tools
 sudo apt install -y python3-pil
 sudo apt install -y python3-setuptools
-#sudo apt install -y python3-rpi.gpio
 
+#Upgrade the setup tools
 sudo pip3 install --upgrade setuptools
 
+#Enable SPI on the RPi
 sudo `echo 'dtoverlay=spi1-3cs' `>> /boot/config.txt
 
+#Install the needed Python3 libraries
 sudo pip3 install RPI.GPIO
 sudo pip3 install adafruit-blinka
 sudo pip3 install adafruit-circuitpython-dht
