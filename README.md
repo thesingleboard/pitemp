@@ -262,12 +262,21 @@ The temperature range of DHT11 is from 0 to 50 degree Celsius with a 2-degree ac
 
 URL - https://www.elprocus.com/a-brief-on-dht11-sensor/
 
-### LCD screen output
-### MQTT
+### SSD1306 OLED
+The ssd1306 OLED screen is a 128x64 display and is ideal for smal projects. The screen can be easily hooked up to either an Arduino or Raspberry PI using the SPI output on the GPIO. 
 
-## MQTT Protocol
+URL - https://components101.com/oled-display-ssd1306
 
-## DHT11 Sensor
+### Raspberry PI 3
+One of the most popular single board computers which is powerful enough for any hobby project and comes in at a very affordable price point. The main features of the board are 64bit, quad core ARM CPU, 1Gb of ram, 802.11 a/b ethernet, and HDMI video output. The board can be set up very quickly by flashing the Raspberry PI OS to a micro SD card, and powering on the board.
+
+URL - https://www.raspberrypi.org/documentation/hardware/raspberrypi/README.md
+
+## Protocols
+### MQTT Protocol
+MQTT is a lightweight publish/subscribe messaging protocol designed for M2M (machine to machine) telemetry in low bandwidth environments.
+
+URl - http://www.steves-internet-guide.com/mqtt/
 ---
 
 # Part 4 - Extra Credit
