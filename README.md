@@ -63,6 +63,7 @@ All of the codeing for PiTemp is done using Python3. The reason I chose Python t
 ## Architectural diagram
 
 ### Bread Board
+***Note: The 10k pull up resistor and filtering cap are not shown in this diagram. See the link to the DHT 11 sensor.***
 
 <img src="./images/pitemp_bb.png">
 
@@ -269,6 +270,16 @@ For measuring temperature this sensor uses a Negative Temperature coefficient th
 The temperature range of DHT11 is from 0 to 50 degree Celsius with a 2-degree accuracy. Humidity range of this sensor is from 20 to 80% with 5% accuracy. The sampling rate of this sensor is 1Hz .i.e. it gives one reading for every second.  DHT11 is small in size with operating voltage from 3 to 5 volts. The maximum current used while measuring is 2.5mA.
 
 URL - https://www.elprocus.com/a-brief-on-dht11-sensor/
+
+You should use the DHT 11 module since it already has the 10k resistor and filtering capacitor already soldered onto the PCB. This helps to unclutter your breadboard.
+
+Front
+
+<img src="./images/DHT11module-front.jpg">
+
+Back
+
+<img src="./images/DHT11module-back.jpg">
 
 ### SSD1306 OLED
 The ssd1306 OLED screen is a 128x64 display and is ideal for smal projects. The screen can be easily hooked up to either an Arduino or Raspberry PI using the SPI output on the GPIO. 
