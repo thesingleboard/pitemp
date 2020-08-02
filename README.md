@@ -62,6 +62,7 @@ All of the codeing for PiTemp is done using Python3. The reason I chose Python t
 
 ## Architectural diagram
 ### Bread Board
+<img src="./pitemp_bb.svg">
 ### Schematic
 ## Assemble the prototype
 ---
