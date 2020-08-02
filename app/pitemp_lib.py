@@ -1,5 +1,6 @@
 #lib file for pitemp
 import subprocess
+import datetime
 import settings
 import logging
 import ssl
@@ -16,12 +17,12 @@ class pitemp():
 		
 		try:
 			#connect to the sqlite process
-			sqlcon = sqlite3.connect('mqtt.db')
+			sqlcon = sqlite3.connect('mqtt.db_%s'%(datetime.datetime.now().timestamp()))
 			self.cursor = sqlcon.cursor()
 			self.cursor.execute('''CREATE TABLE mqtt (temp float, humidity float, scale text, sensor text, date text)''')
 		except Exception as e:
-			logging.error(e)
-			logging.error("Could not connect to the sqlite DB.")
+			logging.warn(e)
+			logging.warn("Could not connect to the sqlite DB.")
 		
 		try:
 			self.client.connect(settings.MQTTBROKER, settings.MQTTPORT, 60)
@@ -84,8 +85,8 @@ class pitemp():
 		"""
 		#send a mesage to the MQTT broker, pub
 		try:
-			self.client.publish(input_dict['sensor']+"/temperature",str(input_dict['temp'])+""+input_dict['scale'])
-			self.client.publish(input_dict['sensor']+"/humidity",str(input_dict['humidity']))
+			self.client.publish(settings.HOSTNAME+"/"+input_dict['sensor']+"/temperature",str(input_dict['temp'])+""+input_dict['scale'])
+			self.client.publish(settings.HOSTNAME+"/"+input_dict['sensor']+"/humidity",str(input_dict['humidity']))
 		except Exception as e:
 			logging.error(e)
 			logging.error("Could not send messages to MQTT broker")
@@ -102,8 +103,9 @@ class pitemp():
 	
 	def db_insert(self,input_dict):
 		try:
-			self.cursor.insert("INSERT INTO mqtt VALUES ('"+input_dict['temp']+"','"+input_dict['humidity']+"','"+input_dict['scale']+"','"+input_dict['sensor']+"','"+input_dict['date']+"')")
-		except Exception as e;
+			input_dict['date'] = str(datetime.datetime.now().timestamp())
+			self.cursor.execute("INSERT INTO mqtt VALUES ('"+str(input_dict['temp'])+"','"+str(input_dict['humidity'])+"','"+input_dict['scale']+"','"+input_dict['sensor']+"','"+input_dict['date']+"')")
+		except Exception as e:
 			logging.error(e)
 			logging.error("Could not insert data into the database")
 	

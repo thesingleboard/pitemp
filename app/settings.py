@@ -1,5 +1,9 @@
 #!/bin/python
 import os
+import socket
+
+#hostname
+HOSTNAME = socket.gethostname()
 
 #DHT11 or DHT22
 SENSORTYPE = os.getenv('SENSORTYPE',None)

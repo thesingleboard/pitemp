@@ -1,4 +1,9 @@
 #!/bin/bash
+#make sure you have the certificate before setting up.
+
+CERT='ca.crt'
+CERTPATH='~/pitemp/certs'
+
 sudo apt-get -y update
 sudo apt-get upgrade
 
@@ -6,7 +11,6 @@ sudo apt-get install -y python3-pip
 sudo apt install -y python3-dev
 sudo apt install -y python-imaging python-smbus i2c-tools
 sudo apt install -y python3-pil
-sudo apt install -y python3-pip
 sudo apt install -y python3-setuptools
 #sudo apt install -y python3-rpi.gpio
 
@@ -23,4 +27,8 @@ sudo pip3 install pysqlite3
 sudo apt install -y python-smbus
 sudo apt-get install -y libgpiod2
 sudo apt install -y i2c-tools
+
+#copy the ca.crt file to the correct location
+sudo mkdir -p ${CERTPATH}
+sudo cp ${CERT} ${CERTPATH}
 

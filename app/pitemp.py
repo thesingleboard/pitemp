@@ -15,7 +15,7 @@ from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 
-def screen_output():
+def main():
     
     plib = pitemp()
     
@@ -82,7 +82,8 @@ def screen_output():
                 plib.send_mqtt({"sensor":"sensor"+pin,"temp":temperature,"humidity":humidity,"scale":temp_scale})
             except Exception as e:
                 logging.warn("Could not connect to the mqtt broker,writing to internal datastore")
-                plib.db_insert()
+            
+            plib.db_insert({"sensor":"sensor"+pin,"temp":temperature,"humidity":humidity,"scale":temp_scale})
 
             #TEST#
             #print(output)
@@ -111,4 +112,4 @@ def screen_output():
 
 if __name__=='__main__':
     #Run the function
-    schedule.every(settings.INTERVAL).seconds.do(screen_output())
+    schedule.every(settings.INTERVAL).seconds.do(main())
