@@ -61,9 +61,13 @@ All of the codeing for PiTemp is done using Python3. The reason I chose Python t
 | paho-mqtt | 1.5.0 |
 
 ## Architectural diagram
+
 ### Bread Board
+
 <img src="./pitemp_bb.svg">
+
 ### Schematic
+
 ## Assemble the prototype
 ---
 
