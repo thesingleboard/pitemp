@@ -64,6 +64,7 @@ All of the codeing for PiTemp is done using Python3. The reason I chose Python t
 
 ### Bread Board
 ***Note: The 10k pull up resistor and filtering cap are not shown in this diagram. See the link to the DHT 11 sensor.***
+
 <img src="./images/pitemp_bb.png">
 
 ### Schematic
