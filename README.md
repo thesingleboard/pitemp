@@ -64,11 +64,11 @@ All of the codeing for PiTemp is done using Python3. The reason I chose Python t
 
 ### Bread Board
 
-<img src="./pitemp_bb.png">
+<img src="./images/pitemp_bb.png">
 
 ### Schematic
 
-<img src="./pitemp_schem.png">
+<img src="./images/pitemp_schem.png">
 
 ## Assemble the prototype
 ---
