@@ -68,6 +68,8 @@ All of the codeing for PiTemp is done using Python3. The reason I chose Python t
 
 ### Schematic
 
+<img src="./pitemp_schem.png">
+
 ## Assemble the prototype
 ---
 
