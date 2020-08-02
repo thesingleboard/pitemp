@@ -271,6 +271,16 @@ The temperature range of DHT11 is from 0 to 50 degree Celsius with a 2-degree ac
 
 URL - https://www.elprocus.com/a-brief-on-dht11-sensor/
 
+You should use the DHT 11 module since it already has the 10k resistor and filtering capacitor already soldered onto the PCB. This helps to unclutter your breadboard.
+
+Front
+
+<img src="./images/DHT11module-front.jpg">
+
+Back
+
+<img src="./images/DHT11module-back.jpg">
+
 ### SSD1306 OLED
 The ssd1306 OLED screen is a 128x64 display and is ideal for smal projects. The screen can be easily hooked up to either an Arduino or Raspberry PI using the SPI output on the GPIO. 
 
