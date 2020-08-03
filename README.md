@@ -120,7 +120,7 @@ sudo mkdir -p ${CERTPATH}
 sudo cp ${CERT} ${CERTPATH}
 ```
 
-## Build a simple broker
+## Build a simple broker(mqtt server)
 In order to develop and test the PiTemp and the MQTT protocol, you will need to deploy a simple broker to recive the data sent by the PiTemp. The MQTT protocol uses SSL to protect data, and as a best practice should be used in IoT communication channels. The MQTT protocol is used in IoT applications because of it speed and the fault tolerant nature of the protocol.
 
 MQTT - https://mqtt.org/
@@ -253,7 +253,7 @@ SSLCERT = os.getenv('SSLCERT',None)
 ```
 # python3 pitemp.py
 ```
-### Start the broker
+### Start the broker(server)
 ```
 # sudo mosquitto -d -v -c /etc/mosquitto/mosquitto.conf
 ```
