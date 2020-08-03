@@ -295,6 +295,8 @@ URL - https://www.raspberrypi.org/documentation/hardware/raspberrypi/README.md
 ### MQTT Protocol
 MQTT is a lightweight publish/subscribe messaging protocol designed for M2M (machine to machine) telemetry in low bandwidth environments.
 
+URL - http://mqtt.org
+
 URl - http://www.steves-internet-guide.com/mqtt/
 
 ---
