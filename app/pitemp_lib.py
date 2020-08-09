@@ -110,8 +110,10 @@ class pitemp():
 			logging.error("Could not insert data into the database")
 	
 	def db_read():
-		pass
+		return {'output':'stuff'}
 	
 	def delete_record():
 		pass
+	
+	
 

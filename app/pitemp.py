@@ -69,8 +69,12 @@ def main():
                 humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
                 temp_scale = 'C'
                 if(settings.SCALE == 'Fahrenheit'):
-                    temperature = temperature * 9/5.0 + 32
                     temp_scale = 'F'
+                    try:
+                        temperature = temperature * 9/5.0 + 32
+                    except Exception as e:
+                        logging.error('Fahrenheit converison error: %s'%e)
+                        temperature=0
                 output['temp_pin%s'%(pin)] = temperature
                 output['temp_scale'] = temp_scale
                 output['humidity_pin%s'%(pin)] = humidity

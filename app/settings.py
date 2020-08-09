@@ -2,6 +2,9 @@
 import os
 import socket
 
+#api version
+API = os.getenv('API',None)
+
 #hostname
 HOSTNAME = socket.gethostname()
 
