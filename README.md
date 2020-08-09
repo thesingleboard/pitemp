@@ -63,6 +63,7 @@ All of the codeing for PiTemp is done using Python3. The reason I chose Python t
 ## Architectural diagram
 
 ### Bread Board
+***Note: The 10k pull up resistor and filtering cap are not shown in this diagram. See the link to the DHT 11 sensor.***
 
 <img src="./images/pitemp_bb.png">
 
@@ -119,7 +120,7 @@ sudo mkdir -p ${CERTPATH}
 sudo cp ${CERT} ${CERTPATH}
 ```
 
-## Build a simple broker
+## Build a simple broker(mqtt server)
 In order to develop and test the PiTemp and the MQTT protocol, you will need to deploy a simple broker to recive the data sent by the PiTemp. The MQTT protocol uses SSL to protect data, and as a best practice should be used in IoT communication channels. The MQTT protocol is used in IoT applications because of it speed and the fault tolerant nature of the protocol.
 
 MQTT - https://mqtt.org/
@@ -252,7 +253,7 @@ SSLCERT = os.getenv('SSLCERT',None)
 ```
 # python3 pitemp.py
 ```
-### Start the broker
+### Start the broker(server)
 ```
 # sudo mosquitto -d -v -c /etc/mosquitto/mosquitto.conf
 ```
@@ -270,6 +271,16 @@ The temperature range of DHT11 is from 0 to 50 degree Celsius with a 2-degree ac
 
 URL - https://www.elprocus.com/a-brief-on-dht11-sensor/
 
+You should use the DHT 11 module since it already has the 10k resistor and filtering capacitor already soldered onto the PCB. This helps to unclutter your breadboard.
+
+Front
+
+<img src="./images/DHT11module-front.jpg">
+
+Back
+
+<img src="./images/DHT11module-back.jpg">
+
 ### SSD1306 OLED
 The ssd1306 OLED screen is a 128x64 display and is ideal for smal projects. The screen can be easily hooked up to either an Arduino or Raspberry PI using the SPI output on the GPIO. 
 
@@ -282,7 +293,12 @@ URL - https://www.raspberrypi.org/documentation/hardware/raspberrypi/README.md
 
 ## Protocols
 ### MQTT Protocol
+
+<img src="./images/MQTT-hor.png">
+
 MQTT is a lightweight publish/subscribe messaging protocol designed for M2M (machine to machine) telemetry in low bandwidth environments.
+
+URL - http://mqtt.org
 
 URl - http://www.steves-internet-guide.com/mqtt/
 
