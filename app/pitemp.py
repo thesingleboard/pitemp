@@ -2,6 +2,7 @@
 #rpi based temp monitoring and alerting
 import time
 import datetime
+import logging
 #import multiprocessing
 #import subprocess
 import Adafruit_DHT
