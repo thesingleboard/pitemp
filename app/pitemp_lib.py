@@ -5,6 +5,7 @@ import settings
 import logging
 import ssl
 import sqlite3
+import psutil
 import paho.mqtt.client as paho
 
 class pitemp():
@@ -74,6 +75,11 @@ class pitemp():
         return {'ip':ip,'gateway':gateway}
 
     def get_cpu_id(self):
+        """
+        DESC: Get the CPU ID and use it as the unchangebale device id.
+        INPUT: None
+        OUTPUT: device_id
+        """
         # Extract serial from cpuinfo file
         device_id = "0000000000000000"
         try:
@@ -97,8 +103,34 @@ class pitemp():
                                        - start_date
                                        - start_time
         """
-        
-    
+        up = True
+        out_dict = {}
+        try:
+            uptime = subprocess.Popen("uptime -p",stdout=subprocess.PIPE,shell=True)
+            (out,error) = uptime.communicate()
+            out = out.decode("utf-8").rstrip().split()
+        except Exception as e:
+            logging.error("Could not get uptime %s: %s"%error,e)
+            up = False
+
+        try:
+            since = subprocess.Popen("uptime -s",stdout=subprocess.PIPE,shell=True)
+            (sout,serror) = since.communicate()
+            sout = sout.decode("utf-8").rstrip().split()
+        except Exception as e:
+            logging.error("Could not get uptime %s: %s"%serror,e)
+            up = False
+            
+        #make the out data useful
+        if(up):
+            out_dict['days'] = out[1]
+            out_dict['hours'] = out[3]
+            out_dict['minutes'] = out[5]
+            out_dict['start_date'] = sout[0]
+            out_dict['start_time'] = sout[1]
+
+        return out_dict
+
     def get_cpu_status(self):
         """
         DESC: Run the vcgencmd command and get some systme level stats
@@ -109,37 +141,38 @@ class pitemp():
                                        - io_volts
                                        - phy_volts
         """
-        cmds = {'cpu_tmp':'measure_temp','cpu_volts':'measure_volts core','ram_volts':'measure_volts sdram_c','io_volts':'measure_volts sdram_i','phy_volts':'measure_volts sdram_p','cpu_clock':'measure_clock arm'}
-        args = ['vcgencmd']
+        cmds = {'cpu_temp':'measure_temp','cpu_volts':'measure_volts core','ram_volts':'measure_volts sdram_c','io_volts':'measure_volts sdram_i','phy_volts':'measure_volts sdram_p','cpu_clock':'measure_clock arm'}
         output = {}
-        for k,v in cmds.items:
+        
+        for k,v in cmds.items():
+            args = ['vcgencmd']
             args.append(v)
             try:
                 cmd = subprocess.Popen(args, stdout=subprocess.PIPE)
-                output[k] = cmd.communicate()[0]
+                out = cmd.communicate()[0].decode("utf-8").rstrip().split('=')
+                output[k] = out[1]
             except Exception as e:
                 logging.error("vcgencmd: %s"%e)
                 output[k] = 'ERROR'
 
         return output
 
-    def get_network_status(self,nic):
+    def get_network_status(self,nic=None):
         """
         DESC: Get the netwotk transmit recieve on the selected nic.
         INPUT: nic - nic name
         OUTPUT: out_dict - recieve
-                                       - transmit
+                         - transmit
         """
-        args = ['netstat', '-i ','|', 'grep']
+        if(nic is None):
+            nic = settings.PHYSNET
 
         try:
-            cmd = subprocess.Popen(args.append(nic), stdout=subprocess.PIPE)
-            out = cmd.communicate()[0]
+            out = psutil.net_io_counters(pernic=True)
         except Exception as e:
             logging.error('Get network error: %s'%e)
 
-        
-        return None
+        return out[nic]
 
     def get_memory(self):
         """
@@ -150,13 +183,13 @@ class pitemp():
                                        - gpu_mem
         """
         cmds = {'cpu_mem':'arm','gpu_mem':'gpu'}
-        args = ['vcgencmd']
         output = {}
-        for k,v in cmds.items:
+        for k,v in cmds.items():
+            args = ['vcgencmd','get_mem']
             args.append(v)
             try:
                 cmd = subprocess.Popen(args, stdout=subprocess.PIPE)
-                output[k] = cmd.communicate()[0]
+                output[k] = cmd.communicate()[0].decode("utf-8").rstrip()
             except Exception as e:
                 logging.error("vcgencmd: %s"%e)
                 output[k] = 'ERROR'
@@ -177,15 +210,21 @@ class pitemp():
                                        - network_rx_stats
         """
         cpu_stats = self.get_cpu_status()
-        system_mem = get_memory()
+        system_mem = self.get_memory()
+        uptime = self.get_uptime()
+        network = self.get_network_status()
+
+        memory = system_mem['cpu_mem'].split('=')
 
         return {'cpu_id':self.get_cpu_id(),
-        'cpu_temp':cpu_stats['cpu_temp'],
-        'cpu_voltage':cpu_stats['cpu_volts'],
-        'cpu_clock':cpu_stats['cpu_clock'],
-        'system_memory':system_memory['cpu_mem'],
-        'system_uptime':}
-
+                    'cpu_temp':cpu_stats['cpu_temp'],
+                    'cpu_voltage':cpu_stats['cpu_volts'],
+                    'cpu_clock':cpu_stats['cpu_clock'],
+                    'system_memory':memory[1],
+                    'system_uptime':uptime['days']+" days "+uptime['minutes']+" minutes",
+                    'network_bytes_sent': network.bytes_sent,
+                    'network_bytes_recv': network.bytes_recv
+                    }
 
 ####MQTT######
     def send_mqtt(self,input_dict):
@@ -229,4 +268,8 @@ class pitemp():
         return {'output':'stuff'}
 
     def delete_record():
+        pass
+
+####System#####
+    def write_config():
         pass

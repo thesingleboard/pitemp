@@ -45,17 +45,17 @@ SSLCERT = os.getenv('SSLCERT',None)
 #SPI_PORT = 0
 #SPI_DEVICE = 0
 
-CONFIG = {'API':API,
-		  'HOSTNAME':HOSTNAME,
-		  'SENSORTYPE':SENSORTYPE,
-		  'SCALE':SCALE,
-		  'PINS':PINS,
-		  'SLEEP':SLEEP,
-		  'RST':RST,
-		  'INTERVAL':INTERVAL,
-		  'PHYSNET':PHYSNET,
-		  'MQTTBROKER':MQTTBROKER,
-		  'MQTTPORT':MQTTPORT,
-		  'SSLCERTPATH':SSLCERTPATH,
-		  'SSLCERT':SSLCERT
-		  }
+CONFIG = {  'API':API,
+            'HOSTNAME':HOSTNAME,
+            'SENSORTYPE':SENSORTYPE,
+            'SCALE':SCALE,
+            'PINS':PINS,
+            'SLEEP':SLEEP,
+            'RST':RST,
+            'INTERVAL':INTERVAL,
+            'PHYSNET':PHYSNET,
+            'MQTTBROKER':MQTTBROKER,
+            'MQTTPORT':MQTTPORT,
+            'SSLCERTPATH':SSLCERTPATH,
+            'SSLCERT':SSLCERT
+            }

@@ -3,20 +3,23 @@
 import time
 import datetime
 import logging
+#import multiprocessing
+#import subprocess
 import Adafruit_DHT
+#import Adafruit_GPIO.SPI as SPI
 import Adafruit_SSD1306
 import settings
 import schedule
-
 from pitemp_lib import pitemp
 
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 
-def send_temp_hume_data():
-
+def main():
+    
     plib = pitemp()
+    
     #get the pins
     PIN = settings.PINS
     sensor = Adafruit_DHT.DHT11
@@ -114,5 +117,4 @@ def send_temp_hume_data():
 
 if __name__=='__main__':
     #Run the function
-    schedule.every(int(settings.INTERVAL)).seconds.do(send_temp_hume_data)
-    
+    schedule.every(settings.INTERVAL).seconds.do(main())

@@ -1,19 +1,22 @@
 import settings
-import pitemp_lib
+from pitemp_lib import pitemp
+import logging
 
 #API stuff
 from flask import Flask, abort, jsonify, request
 
+#Set flask to output "pretty print"
 application = Flask(__name__)
 application.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 api = settings.API
+pt = pitemp()
 
 @application.route('/api/'+api+'/alive',methods=['POST'])
 def get_alive():
 
     api_status = 'up'
-    device_id = pitemp_lib.get_cpu_id()
+    device_id = pt.get_cpu_id()
     if(device_id == '0000000000000000'):
         api_status = 'down'
 
@@ -21,11 +24,9 @@ def get_alive():
 
 @application.route('/api/'+api+'/status',methods=['GET'])
 def get_status():
-    
-    system_status = None
-    
+
     try:
-        system_status = pitemp_lib.get_system_status()
+        system_status = pt.get_system_status()
     except Exception as e:
         logging.error("Sytem status: %s"%e)
         system_status = 'error'
@@ -35,8 +36,9 @@ def get_status():
 @application.route('/api/'+api+'/config',methods=['GET','PATCH'])
 def config():
     
+    #pull in the new config data
     newdata = request.get_json()
-    if newdata == None:
+    if newdata is None:
         newdata = settings.CONFIG
     
     if request.method == 'GET':
@@ -52,9 +54,9 @@ def config():
 
         return jsonify({'STATUS':'updated','CONFIG':current})
 
-@application.route('/api/'+api+'/data',methods=['GET'])
-def get_data():
-    return jsonify(pitemp_lib.pitemp.db_read())
+#@application.route('/api/'+api+'/data',methods=['GET'])
+#def get_data():
+#    return jsonify(pt.db_read())
 
 if __name__ == '__main__':
 	application.run(host='0.0.0.0',port=10500, debug=True,ssl_context='adhoc')
