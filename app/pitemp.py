@@ -14,7 +14,15 @@ from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 
+def send_system_status():
+    pass
+
 def send_temp_hume_data():
+    pass
+
+def display 
+
+def main():
 
     plib = pitemp()
     #get the pins
