@@ -18,8 +18,8 @@ class pitemp():
 
         try:
             #connect to the sqlite process
-            sqlcon = sqlite3.connect('mqtt.db_%s'%(datetime.datetime.now().timestamp()))
-            self.cursor = sqlcon.cursor()
+            self.sqlcon = sqlite3.connect('iotdb_%s.db'%(datetime.datetime.now().timestamp()))
+            self.cursor = self.sqlcon.cursor()
             self.cursor.execute('''CREATE TABLE mqtt (temp float, humidity float, scale text, sensor text, date text)''')
         except Exception as e:
             logging.warn(e)
@@ -258,8 +258,10 @@ class pitemp():
 
     def db_insert(self,input_dict):
         try:
+            logging.info("Inserting sensor info into db. %s"%(input_dict))
             input_dict['date'] = str(datetime.datetime.now().timestamp())
             self.cursor.execute("INSERT INTO mqtt VALUES ('"+str(input_dict['temp'])+"','"+str(input_dict['humidity'])+"','"+input_dict['scale']+"','"+input_dict['sensor']+"','"+input_dict['date']+"')")
+            self.sqlcon.commit()
         except Exception as e:
             logging.error(e)
             logging.error("Could not insert data into the database")

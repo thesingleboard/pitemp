@@ -20,7 +20,8 @@ def send_system_status():
 def send_temp_hume_data():
     pass
 
-def display 
+def display ():
+    pass
 
 def main():
 
@@ -92,8 +93,7 @@ def main():
                 plib.send_mqtt({"sensor":"sensor"+pin,"temp":temperature,"humidity":humidity,"scale":temp_scale})
             except Exception as e:
                 logging.warn("Could not connect to the mqtt broker,writing to internal datastore")
-            
-            plib.db_insert({"sensor":"sensor"+pin,"temp":temperature,"humidity":humidity,"scale":temp_scale})
+                plib.db_insert({"sensor":"sensor"+pin,"temp":temperature,"humidity":humidity,"scale":temp_scale})
 
             #TEST#
             #print(output)
@@ -122,5 +122,5 @@ def main():
 
 if __name__=='__main__':
     #Run the function
-    schedule.every(int(settings.INTERVAL)).seconds.do(send_temp_hume_data)
+    schedule.every(settings.INTERVAL).seconds.do(main())
     
