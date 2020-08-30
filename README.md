@@ -59,6 +59,9 @@ All of the codeing for PiTemp is done using Python3. The reason I chose Python t
 | adafruit-platformdetect | 2.5.0 |
 | adafruit-pureio | 1.0.4 |
 | paho-mqtt | 1.5.0 |
+| gunicorn | 20.0.4 |
+| requests | 2.21.0 |
+| multiprocess | 0.70.10 |
 
 ## Architectural diagram
 
