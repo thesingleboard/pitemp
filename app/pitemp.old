@@ -3,29 +3,23 @@
 import time
 import datetime
 import logging
+#import multiprocessing
+#import subprocess
 import Adafruit_DHT
+#import Adafruit_GPIO.SPI as SPI
 import Adafruit_SSD1306
 import settings
 import schedule
-
 from pitemp_lib import pitemp
 
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 
-def send_system_status():
-    pass
-
-def send_temp_hume_data():
-    pass
-
-def display ():
-    pass
-
 def main():
-
+    
     plib = pitemp()
+    
     #get the pins
     PIN = settings.PINS
     sensor = Adafruit_DHT.DHT11
@@ -93,7 +87,8 @@ def main():
                 plib.send_mqtt({"sensor":"sensor"+pin,"temp":temperature,"humidity":humidity,"scale":temp_scale})
             except Exception as e:
                 logging.warn("Could not connect to the mqtt broker,writing to internal datastore")
-                plib.db_insert({"sensor":"sensor"+pin,"temp":temperature,"humidity":humidity,"scale":temp_scale})
+            
+            plib.db_insert({"sensor":"sensor"+pin,"temp":temperature,"humidity":humidity,"scale":temp_scale})
 
             #TEST#
             #print(output)
@@ -123,4 +118,3 @@ def main():
 if __name__=='__main__':
     #Run the function
     schedule.every(settings.INTERVAL).seconds.do(main())
-    

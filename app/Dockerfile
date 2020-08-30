@@ -17,9 +17,17 @@ RUN pip3 install -r /requirements.txt
 
 ADD pitemp.py $INSTALL_PATH
 ADD pitemp_lib.py $INSTALL_PATH
+ADD run_app.py $INSTALL_PATH
+ADD entrypoint.sh $INSTALLPATH
 ADD settings.py $INSTALL_PATH
 ADD ca.crt $CERT_PATH
 
+#MQTT - secure
 EXPOSE 8883
 
+#API - secure
+EXPOSE 10500
+
 #CMD ["python","pitemp.py"]
+
+ENTRYPOINT["python3","run-app.py"]

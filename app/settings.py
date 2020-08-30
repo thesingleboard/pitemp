@@ -2,6 +2,9 @@
 import os
 import socket
 
+#api version
+API = os.getenv('API',None)
+
 #hostname
 HOSTNAME = socket.gethostname()
 
@@ -41,3 +44,18 @@ SSLCERT = os.getenv('SSLCERT',None)
 #DC = 23
 #SPI_PORT = 0
 #SPI_DEVICE = 0
+
+CONFIG = {  'API':API,
+            'HOSTNAME':HOSTNAME,
+            'SENSORTYPE':SENSORTYPE,
+            'SCALE':SCALE,
+            'PINS':PINS,
+            'SLEEP':SLEEP,
+            'RST':RST,
+            'INTERVAL':INTERVAL,
+            'PHYSNET':PHYSNET,
+            'MQTTBROKER':MQTTBROKER,
+            'MQTTPORT':MQTTPORT,
+            'SSLCERTPATH':SSLCERTPATH,
+            'SSLCERT':SSLCERT
+            }
