@@ -65,5 +65,7 @@ CONFIG = {  'API':API,
             'MQTTBROKER':MQTTBROKER,
             'MQTTPORT':MQTTPORT,
             'SSLCERTPATH':SSLCERTPATH,
-            'SSLCERT':SSLCERT
+            'SSLCERT':SSLCERT,
+            'STATUSINTERVAL':STATUSINTERVAL,
+            'STARTOFTIME':STARTOFTIME
             }

@@ -12,3 +12,4 @@ export MQTTPORT='8883'
 export SSLCERTPATH='/home/pi/Documents/pitemp/certs'
 export SSLCERT='ca.crt'
 export API='1.0'
+export STATUSINTERVAL=5400

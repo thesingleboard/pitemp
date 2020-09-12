@@ -92,6 +92,8 @@ class pitemp_iot():
         while True:
             #The header format
             header = "{0:<10}{1:<4}{2:<4}{3:<4}"
+            temp_output = "{0:<10}"
+            hume_out = "{0:<10}"
 
             # Draw a black filled box to clear the image.
             ip_addr = self.plib.get_nic_ip_info(settings.PHYSNET)
@@ -102,6 +104,10 @@ class pitemp_iot():
             self.draw.text((self.x, self.top+16)," ", font=self.font, fill=255)
             self.draw.text((self.x, self.top+25),header.format("Sensor: ",1,2,3), font=self.font, fill=255)
             self.draw.text((self.x, self.top+33),"---------------------", font=self.font, fill=255)
+
+            self.draw.text((self.x, top+41),temp_output.format("Temp "+output['temp_scale']+":", font=font, fill=255)
+            self.draw.text((self.x, top+49),humid_out.format("Humidity: ", font=font, fill=255)
+
             # Display image.
             self.disp.image(self.image)
             self.disp.display()
@@ -115,7 +121,7 @@ class pitemp_iot():
             #lets print the output of the sensors
             output = {}
             try:
-                humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+                humidity, temperature = Adafruit_DHT.read_retry(self.sensor, pin)
                 temp_scale = 'C'
                 if(settings.SCALE == 'Fahrenheit'):
                     temp_scale = 'F'
@@ -139,8 +145,8 @@ class pitemp_iot():
             temp_output = "{0:<10}{1:<4}{2:<4}{3:<4}"
             humid_out = "{0:<10}{1:<4}{2:<4}{3:<4}"
 
-            draw.text((x, top+41),temp_output.format("Temp "+output['temp_scale']+":",int(output['temp_pin%s'%(str(PIN[0]))]), int(output['temp_pin%s'%(str(PIN[1]))]),int(output['temp_pin%s'%(str(PIN[2]))])), font=font, fill=255)
-            draw.text((x, top+49),humid_out.format("Humidity: ",int(output['humidity_pin%s'%(str(PIN[0]))]),int(output['humidity_pin%s'%(str(PIN[1]))]),int(output['humidity_pin%s'%(str(PIN[2]))])) , font=font, fill=255)
+            self.draw.text((self.x, top+41),temp_output.format("Temp "+output['temp_scale']+":",int(output['temp_pin%s'%(str(PIN[0]))]), int(output['temp_pin%s'%(str(PIN[1]))]),int(output['temp_pin%s'%(str(PIN[2]))])), font=font, fill=255)
+            self.draw.text((self.x, top+49),humid_out.format("Humidity: ",int(output['humidity_pin%s'%(str(PIN[0]))]),int(output['humidity_pin%s'%(str(PIN[1]))]),int(output['humidity_pin%s'%(str(PIN[2]))])) , font=font, fill=255)
 
             # Display image.
             self.disp.image(self.image)

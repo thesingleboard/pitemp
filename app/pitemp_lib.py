@@ -249,15 +249,20 @@ class pitemp():
     def send_status_mqtt(self,input_dict):
         """
         DESC: send the device status to the MQTT server
-        INPUT: input_dict - sensor
-                          - temp
-                          - scale - F/C
-                          - humidity
+        INPUT: input_dict - cpu_id
+                          - cpu_temp
+                          - cpu_voltage
+                          - cpu_clock
+                          - system_memory
+                          - system_uptime
+                          - network_tx_stats
+                          - network_rx_stats
         OUTPUT: None
         NOTE: None
         """
+
         try:
-            self.client.publish(settings.HOSTNAME+"/"+)
+            self.client.publish(settings.HOSTNAME+"/"+input_dict['cpu_id']+"/status",input_dict)
         except Exception as e:
             logging.error(e)
             logging.error("Could not send messages to MQTT broker")
