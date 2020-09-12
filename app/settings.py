@@ -1,6 +1,8 @@
 #!/bin/python
 import os
 import socket
+import time
+import calendar
 
 #api version
 API = os.getenv('API',None)
@@ -40,6 +42,12 @@ MQTTPORT = int(MQTTPORT)
 SSLCERTPATH = os.getenv('SSLCERTPATH',None)
 
 SSLCERT = os.getenv('SSLCERT',None)
+
+#defaults to one hour interval
+STATUSINTERVAL = os.getenv('STATUSINTERVAL',3600)
+
+#get the epoc time 
+STARTOFTIME = calendar.timegm(time.gmtime())
 
 #DC = 23
 #SPI_PORT = 0

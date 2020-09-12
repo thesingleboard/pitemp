@@ -14,13 +14,19 @@ from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 
+#def __init__():
+    #set everything up 
+
 def send_system_status():
+    #send a current status to the mqtt server
     pass
 
 def send_temp_hume_data():
+    # Sent the data via mqtt to the mqtt server
     pass
 
 def display ():
+    # display the current data on the screen
     pass
 
 def main():
@@ -90,7 +96,7 @@ def main():
 
             #send messages to the mqtt broker
             try:
-                plib.send_mqtt({"sensor":"sensor"+pin,"temp":temperature,"humidity":humidity,"scale":temp_scale})
+                plib.send_data_mqtt({"sensor":"sensor"+pin,"temp":temperature,"humidity":humidity,"scale":temp_scale})
             except Exception as e:
                 logging.warn("Could not connect to the mqtt broker,writing to internal datastore")
                 plib.db_insert({"sensor":"sensor"+pin,"temp":temperature,"humidity":humidity,"scale":temp_scale})

@@ -55,7 +55,7 @@ class pitemp():
         DESC: Get the IP of the primary nic
         INPUT: nic - the name of the primary nic
         OUTPUT out_dict - ip
-                                      - gateway
+                        - gateway
         NOTES: None
         """
         try:
@@ -135,15 +135,16 @@ class pitemp():
         """
         DESC: Run the vcgencmd command and get some systme level stats
         INPUT: None
-        OUTPUT: out_dict - cpu_temp
-                                       - cpu_volts
-                                       - ram_volts
-                                       - io_volts
-                                       - phy_volts
+        OUTPUT: out_dict - cpu_count
+                         - cpu_temp
+                         - cpu_volts
+                         - ram_volts
+                         - io_volts
+                         - phy_volts
         """
         cmds = {'cpu_temp':'measure_temp','cpu_volts':'measure_volts core','ram_volts':'measure_volts sdram_c','io_volts':'measure_volts sdram_i','phy_volts':'measure_volts sdram_p','cpu_clock':'measure_clock arm'}
-        output = {}
-        
+        output['cpu_count'] = psutil.cpu_count()
+
         for k,v in cmds.items():
             args = ['vcgencmd']
             args.append(v)
@@ -179,8 +180,8 @@ class pitemp():
         DESC:  Get the cpu and gpu memory
         INPUT: None
         OUTPUT: out_dict - cpu_type
-                                       - cpu_mem
-                                       - gpu_mem
+                         - cpu_mem
+                         - gpu_mem
         """
         cmds = {'cpu_mem':'arm','gpu_mem':'gpu'}
         output = {}
@@ -201,13 +202,13 @@ class pitemp():
         DESC: Get the system status metrics from the device.
         INPUT: None
         OUTPUT: out_dict - cpu_id
-                                       - cpu_temp
-                                       - cpu_voltage
-                                       - cpu_clock
-                                       - system_memory
-                                       - system_uptime
-                                       - network_tx_stats
-                                       - network_rx_stats
+                       - cpu_temp
+                       - cpu_voltage
+                       - cpu_clock
+                       - system_memory
+                       - system_uptime
+                       - network_tx_stats
+                       - network_rx_stats
         """
         cpu_stats = self.get_cpu_status()
         system_mem = self.get_memory()
@@ -227,13 +228,13 @@ class pitemp():
                     }
 
 ####MQTT######
-    def send_mqtt(self,input_dict):
+    def send_data_mqtt(self,input_dict):
         """
-        DESC: send the sensor readings to the mqtt broker
+        DESC: send the sensor readings to the MQTT server
         INPUT: input_dict - sensor
-                                      - temp
-                                      - scale - F/C
-                                      - humidity
+                          - temp
+                          - scale - F/C
+                          - humidity
         OUTPUT: None
         NOTE: None
         """
@@ -245,11 +246,27 @@ class pitemp():
             logging.error(e)
             logging.error("Could not send messages to MQTT broker")
 
+    def send_status_mqtt(self,input_dict):
+        """
+        DESC: send the device status to the MQTT server
+        INPUT: input_dict - sensor
+                          - temp
+                          - scale - F/C
+                          - humidity
+        OUTPUT: None
+        NOTE: None
+        """
+        try:
+            self.client.publish(settings.HOSTNAME+"/"+)
+        except Exception as e:
+            logging.error(e)
+            logging.error("Could not send messages to MQTT broker")
+
     def recieve_mqtt(self,input_array):
         """
         INPUT: input_array - array of topics to subscribe to.
         """
-        #get a message to the MQTT broker, sub 
+        #get a message from the MQTT broker, sub 
         self.subscribe(input_array)
 
 ####DB#######
