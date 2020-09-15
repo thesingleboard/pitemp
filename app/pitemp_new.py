@@ -93,7 +93,11 @@ class pitemp_iot():
             #The header format
             header = "{0:<10}{1:<4}{2:<4}{3:<4}"
             temp_output = "{0:<10}"
-            hume_out = "{0:<10}"
+            humid_out = "{0:<10}"
+
+            scale = 'C'
+            if(settings.SCALE == 'Fahrenheit'):
+                scale = 'F'
 
             # Draw a black filled box to clear the image.
             ip_addr = self.plib.get_nic_ip_info(settings.PHYSNET)
@@ -105,14 +109,14 @@ class pitemp_iot():
             self.draw.text((self.x, self.top+25),header.format("Sensor: ",1,2,3), font=self.font, fill=255)
             self.draw.text((self.x, self.top+33),"---------------------", font=self.font, fill=255)
 
-            self.draw.text((self.x, top+41),temp_output.format("Temp "+output['temp_scale']+":", font=font, fill=255)
-            self.draw.text((self.x, top+49),humid_out.format("Humidity: ", font=font, fill=255)
+            self.draw.text((self.x, self.top+41),temp_output.format("Temp "+scale+":", font=self.font, fill=255))
+            self.draw.text((self.x, self.top+49),humid_out.format("Humidity: ", font=self.font, fill=255))
 
             # Display image.
             self.disp.image(self.image)
             self.disp.display()
 
-    def display_data(self,pin):
+    def display_data(self,pin,sen_num):
         """
         Set up the display and output to it
         """
@@ -122,16 +126,13 @@ class pitemp_iot():
             output = {}
             try:
                 humidity, temperature = Adafruit_DHT.read_retry(self.sensor, pin)
-                temp_scale = 'C'
                 if(settings.SCALE == 'Fahrenheit'):
-                    temp_scale = 'F'
                     try:
                         temperature = temperature * 9/5.0 + 32
                     except Exception as e:
                         logging.error('Fahrenheit converison error: %s'%e)
                         temperature=0
                 output['temp_pin%s'%(pin)] = temperature
-                output['temp_scale'] = temp_scale
                 output['humidity_pin%s'%(pin)] = humidity
             except RuntimeError as error:
                 print(error.args[0])
@@ -142,11 +143,11 @@ class pitemp_iot():
             #send data to onboard db
             self.send_temp_hume_data_db(output)
 
-            temp_output = "{0:<10}{1:<4}{2:<4}{3:<4}"
-            humid_out = "{0:<10}{1:<4}{2:<4}{3:<4}"
+            temp_output = "{%s:<4}"%(sen_num)
+            humid_out = "{%s:<4}"%(sen_num)
 
-            self.draw.text((self.x, top+41),temp_output.format("Temp "+output['temp_scale']+":",int(output['temp_pin%s'%(str(PIN[0]))]), int(output['temp_pin%s'%(str(PIN[1]))]),int(output['temp_pin%s'%(str(PIN[2]))])), font=font, fill=255)
-            self.draw.text((self.x, top+49),humid_out.format("Humidity: ",int(output['humidity_pin%s'%(str(PIN[0]))]),int(output['humidity_pin%s'%(str(PIN[1]))]),int(output['humidity_pin%s'%(str(PIN[2]))])) , font=font, fill=255)
+            self.draw.text((self.x, self.top+41),temp_output.format(int(output['temp_pin%s'%(str(sen_num))]), font=self.font, fill=255))
+            self.draw.text((self.x, self.top+49),humid_out.format(int(output['humidity_pin%s'%(str(sen_num))])) , font=self.font, fill=255)
 
             # Display image.
             self.disp.image(self.image)
@@ -158,7 +159,11 @@ def main():
     proc_01 = multiprocessing.Process(target = yo.display_header)
     proc_01.start()
 
-    procs = [multiprocessing.Process(target = yo.display_data, args=(pin,)) for pin in settings.PINS]
+    procs = None
+    for pin in settings.PINS:
+        num = settings.PINS.index(pin) + 1
+        procs = multiprocessing.Process(target = yo.display_data, args=(pin,(settings.PINS.index(pin)+1),))
+    #procs = [multiprocessing.Process(target = yo.display_data, args=(pin,(settings.PINS.index(pin)+1),) for pin in settings.PINS]
     for p in procs:
         p.start()
 
