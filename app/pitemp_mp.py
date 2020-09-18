@@ -132,8 +132,8 @@ class pitemp_iot():
                     except Exception as e:
                         logging.error('Fahrenheit converison error: %s'%e)
                         temperature=0
-                output['temp_pin%s'%(pin)] = temperature
-                output['humidity_pin%s'%(pin)] = humidity
+                output['temp'] = temperature
+                output['humidity'] = humidity
             except RuntimeError as error:
                 print(error.args[0])
 
@@ -145,9 +145,10 @@ class pitemp_iot():
 
             temp_output = "{%s:<4}"%(sen_num)
             humid_out = "{%s:<4}"%(sen_num)
-
-            self.draw.text((self.x, self.top+41),temp_output.format(int(output['temp_pin%s'%(str(sen_num))]), font=self.font, fill=255))
-            self.draw.text((self.x, self.top+49),humid_out.format(int(output['humidity_pin%s'%(str(sen_num))])) , font=self.font, fill=255)
+            
+            print(output)
+            #self.draw.text((self.x, self.top+41),temp_output.format(int(output['temp']), font=self.font, fill=255))
+            #self.draw.text((self.x, self.top+49),humid_out.format(int(output['humidity'])) , font=self.font, fill=255)
 
             # Display image.
             self.disp.image(self.image)
@@ -159,18 +160,14 @@ def main():
     proc_01 = multiprocessing.Process(target = yo.display_header)
     proc_01.start()
 
-    procs = None
-    for pin in settings.PINS:
-        num = settings.PINS.index(pin) + 1
-        procs = multiprocessing.Process(target = yo.display_data, args=(pin,(settings.PINS.index(pin)+1),))
-    #procs = [multiprocessing.Process(target = yo.display_data, args=(pin,(settings.PINS.index(pin)+1),) for pin in settings.PINS]
-    for p in procs:
-        p.start()
+    #procs = [multiprocessing.Process(target = yo.display_data, args=(pin,(settings.PINS.index(pin)+1),)) for pin in settings.PINS]
+    #for p in procs:
+    #    p.start()
 
     proc_01.join()
 
-    for p in procs:
-        p.join()
+    #for p in procs:
+    #    p.join()
 
 if __name__=='__main__':
     #Run the function

@@ -1,6 +1,7 @@
 export SENSORTYPE='DHT11'
 export SCALE='Fahrenheit'
-export PINS="24,23,4"
+#export PINS="24,23,4"
+export PINS="24"
 export SLEEP=2
 export RST='None'
 export INTERVAL=1
