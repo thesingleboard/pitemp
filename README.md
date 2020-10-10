@@ -308,6 +308,7 @@ URl - http://www.steves-internet-guide.com/mqtt/
 ---
 
 # Part 4 - Extra Credit
+
 ## Set up thingsboard
 ```bash
 #!/bin/bash -x
@@ -390,6 +391,17 @@ done
 echo 'Thingsboard is up'
 echo 'http://${IP}/8080'
 ```
-## Build a rest API
 
-## Simple Graphing Web Service
+## Rest API
+``` Bash
+# Get the system status
+curl -i -k -X GET https://192.168.1.56:10500/api/1.0/status
+
+# Check if the system is alive
+curl -i -k -X POST https://192.168.1.56:10500/api/1.0/alive
+
+# Get the current config or set new config options.
+curl -i -k -X GET https://192.168.1.56:10500/api/1.0/config
+
+curl -i -k -X PATCH https://192.168.1.56:10500/api/1.0/config
+```
