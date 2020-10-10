@@ -1,6 +1,8 @@
 #!/bin/python
 import os
 import socket
+import time
+import calendar
 
 #api version
 API = os.getenv('API',None)
@@ -26,7 +28,8 @@ SLEEP = os.getenv('SLEEP',None)
 RST = os.getenv('RST',None)
 
 #The time interval
-INTERVAL = os.getenv('INTERVAL',None)
+INTERVAL = os.getenv('INTERVAL',10)
+INTERVAL = int(INTERVAL)
 
 #physical network name wlan0 or eth0
 PHYSNET = os.getenv('PHYSNET',None)
@@ -40,6 +43,12 @@ MQTTPORT = int(MQTTPORT)
 SSLCERTPATH = os.getenv('SSLCERTPATH',None)
 
 SSLCERT = os.getenv('SSLCERT',None)
+
+#defaults to one hour interval
+STATUSINTERVAL = os.getenv('STATUSINTERVAL',3600)
+
+#get the epoc time 
+STARTOFTIME = calendar.timegm(time.gmtime())
 
 #DC = 23
 #SPI_PORT = 0
@@ -57,5 +66,7 @@ CONFIG = {  'API':API,
             'MQTTBROKER':MQTTBROKER,
             'MQTTPORT':MQTTPORT,
             'SSLCERTPATH':SSLCERTPATH,
-            'SSLCERT':SSLCERT
+            'SSLCERT':SSLCERT,
+            'STATUSINTERVAL':STATUSINTERVAL,
+            'STARTOFTIME':STARTOFTIME
             }
