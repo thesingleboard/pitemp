@@ -7,7 +7,8 @@ import Adafruit_DHT
 import Adafruit_SSD1306
 import settings
 import schedule
-import multiprocessing
+#import multiprocessing
+from multiprocessing import Pool
 
 from pitemp_lib import pitemp
 
@@ -92,8 +93,8 @@ class pitemp_iot():
         while True:
             #The header format
             header = "{0:<10}{1:<4}{2:<4}{3:<4}"
-            temp_output = "{0:<10}"
-            humid_out = "{0:<10}"
+            temp_output = "{0:<10}{1:<4}{2:<4}{3:<4}"
+            humid_out = "{0:<10}{1:<4}{2:<4}{3:<4}"
 
             scale = 'C'
             if(settings.SCALE == 'Fahrenheit'):
@@ -108,15 +109,14 @@ class pitemp_iot():
             self.draw.text((self.x, self.top+16)," ", font=self.font, fill=255)
             self.draw.text((self.x, self.top+25),header.format("Sensor: ",1,2,3), font=self.font, fill=255)
             self.draw.text((self.x, self.top+33),"---------------------", font=self.font, fill=255)
-
-            self.draw.text((self.x, self.top+41),temp_output.format("Temp "+scale+":", font=self.font, fill=255))
-            self.draw.text((self.x, self.top+49),humid_out.format("Humidity: ", font=self.font, fill=255))
+            self.draw.text((self.x, self.top+41),temp_output.format("Temp "+output['temp_scale']+":",int(output['temp_pin%s'%(str(PIN[0]))]), int(output['temp_pin%s'%(str(PIN[1]))]),int(output['temp_pin%s'%(str(PIN[2]))])), font=self.font, fill=255)
+            self.draw.text((self.x, self.top+49),humid_out.format("Humidity: ",int(output['humidity_pin%s'%(str(PIN[0]))]),int(output['humidity_pin%s'%(str(PIN[1]))]),int(output['humidity_pin%s'%(str(PIN[2]))])) , font=self.font, fill=255)
 
             # Display image.
             self.disp.image(self.image)
             self.disp.display()
 
-    def display_data(self,pin,sen_num):
+    def display_data(self,pin):
         """
         Set up the display and output to it
         """
@@ -142,32 +142,13 @@ class pitemp_iot():
 
             #send data to onboard db
             self.send_temp_hume_data_db(output)
-
-            temp_output = "{%s:<4}"%(sen_num)
-            humid_out = "{%s:<4}"%(sen_num)
-            
             print(output)
-            #self.draw.text((self.x, self.top+41),temp_output.format(int(output['temp']), font=self.font, fill=255))
-            #self.draw.text((self.x, self.top+49),humid_out.format(int(output['humidity'])) , font=self.font, fill=255)
-
-            # Display image.
-            self.disp.image(self.image)
-            self.disp.display()
 
 def main():
-    yo = pitemp_iot()
+    iot = pitemp_iot()
 
-    proc_01 = multiprocessing.Process(target = yo.display_header)
-    proc_01.start()
-
-    #procs = [multiprocessing.Process(target = yo.display_data, args=(pin,(settings.PINS.index(pin)+1),)) for pin in settings.PINS]
-    #for p in procs:
-    #    p.start()
-
-    proc_01.join()
-
-    #for p in procs:
-    #    p.join()
+    p = Pool()
+    p.map(iot.display_data, settings.PINS)
 
 if __name__=='__main__':
     #Run the function

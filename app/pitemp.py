@@ -14,21 +14,6 @@ from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 
-#def __init__():
-    #set everything up 
-
-def send_system_status():
-    #send a current status to the mqtt server
-    pass
-
-def send_temp_hume_data():
-    # Sent the data via mqtt to the mqtt server
-    pass
-
-def display ():
-    # display the current data on the screen
-    pass
-
 def main():
 
     plib = pitemp()
@@ -93,25 +78,24 @@ def main():
                 output['humidity_pin%s'%(pin)] = humidity
             except RuntimeError as error:
                 print(error.args[0])
-
+    
+            #TEST#
+            #print(output)
+            #####
             #send messages to the mqtt broker
             try:
                 plib.send_data_mqtt({"sensor":"sensor"+pin,"temp":temperature,"humidity":humidity,"scale":temp_scale})
             except Exception as e:
                 logging.warn("Could not connect to the mqtt broker,writing to internal datastore")
                 plib.db_insert({"sensor":"sensor"+pin,"temp":temperature,"humidity":humidity,"scale":temp_scale})
-
-            #TEST#
-            #print(output)
-            #####
-
+    
         dt = datetime.datetime.now()
-
+    
         #screen string formatting
         header = "{0:<10}{1:<4}{2:<4}{3:<4}"
         temp_output = "{0:<10}{1:<4}{2:<4}{3:<4}"
         humid_out = "{0:<10}{1:<4}{2:<4}{3:<4}"
-
+    
         # Draw a black filled box to clear the image.
         draw.rectangle((0,0,width,height), outline=0, fill=0)
         draw.text((x, top),"Time: "+dt.strftime('%H:%M:%S'), font=font, fill=255)
@@ -129,4 +113,6 @@ def main():
 if __name__=='__main__':
     #Run the function
     schedule.every(settings.INTERVAL).seconds.do(main())
+    while True:
+        schedule.run_pending()
     

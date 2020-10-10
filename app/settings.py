@@ -28,7 +28,8 @@ SLEEP = os.getenv('SLEEP',None)
 RST = os.getenv('RST',None)
 
 #The time interval
-INTERVAL = os.getenv('INTERVAL',None)
+INTERVAL = os.getenv('INTERVAL',10)
+INTERVAL = int(INTERVAL)
 
 #physical network name wlan0 or eth0
 PHYSNET = os.getenv('PHYSNET',None)

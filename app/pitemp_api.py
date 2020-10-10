@@ -25,11 +25,11 @@ def get_alive():
 @application.route('/api/'+api+'/status',methods=['GET'])
 def get_status():
 
-    try:
-        system_status = pt.get_system_status()
-    except Exception as e:
-        logging.error("Sytem status: %s"%e)
-        system_status = 'error'
+    #try:
+    system_status = pt.get_system_status()
+    #except Exception as e:
+     #   logging.error("Sytem status: %s"%e)
+      #  system_status = 'error'
     
     return jsonify({'status':system_status})
     

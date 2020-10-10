@@ -143,6 +143,7 @@ class pitemp():
                          - phy_volts
         """
         cmds = {'cpu_temp':'measure_temp','cpu_volts':'measure_volts core','ram_volts':'measure_volts sdram_c','io_volts':'measure_volts sdram_i','phy_volts':'measure_volts sdram_p','cpu_clock':'measure_clock arm'}
+        output= {}
         output['cpu_count'] = psutil.cpu_count()
 
         for k,v in cmds.items():
